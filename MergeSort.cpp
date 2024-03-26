@@ -1,87 +1,72 @@
-#include<iostream>
+#include <iostream>
+ 
+#define num 5
 
 using namespace std ;
 
-void merge(int[],int,int,int);
-
-void merge_Sort(int arr[], int low, int high)
+void merge(int*,int*,int,int,int);
+void mergesort(int *a, int*b, int low, int high)
 {
-        int mid;
-
-        if(low < high)
-        {
-            mid = (low+high)/2;
-            merge_Sort(arr,low,high);
-            merge_Sort(arr,mid+1,high);
-            merge(arr,low,high,mid);
-        }
+    int pivot;
+    
+    if(low<high)
+    {
+        pivot=(low+high)/2;
+        mergesort(a,b,low,pivot);
+        mergesort(a,b,pivot+1,high);
+        merge(a,b,low,pivot,high);
+    }
 }
 
-void merge(int arr[],int low, int high,int mid)
+void merge(int *a, int *b, int low, int pivot, int high)
 {
-    int i,j,k,c[50];
-
-    i=low ;
-    k=mid;
-    j=mid+1;
-
-    while(i<=mid && j<=high)
+    int h,i,j,k;
+    h=low;
+    i=low;
+    j=pivot+1;
+    
+    while((h<=pivot)&&(j<=high))
     {
-            if(arr[i]<arr[j])
-            {
-                c[k]=arr[i];
-                k++;
-                i++;
-            }
-            else
-            {
-                c[k]=arr[j];
-                k++;
-                j++;
-            }
-    }
-
-    while(i <= mid)
-    {
-        c[k]=arr[i];
-        k++;
+        if(a[h]<=a[j])
+        {
+            b[i]=a[h];
+            h++;
+        }
+        else
+        {
+            b[i]=a[j];
+            j++;
+        }
         i++;
     }
-    while(j <= high)
+        
+    if(h>pivot)
     {
-        c[k]=arr[j];
-        k++;
-        j++;
+        for(k=j; k<=high; k++)
+        {
+            b[i]=a[k];
+            i++;
+        }
     }
-
-    for(i=low ; i<k ; i++)
+    else
     {
-            arr[i]=c[i];
+        for(k=h; k<=pivot; k++)
+        {
+            b[i]=a[k];
+            i++;
+        }
     }
-
+    
+    for(k=low; k<=high; k++) a[k]=b[k];
 }
 
 int main()
 {
-    int arr[20];
-    int num;
+    int a[] = {12,10,43,23,-78};
+    int b[num];
 
-    cout << "enter number of element :";
-    cin >> num ;
-
-    cout << "Enter Elements :";
-    for(int i=0; i<num ; i++)
-    {
-        cin >> arr[i] ;
-    }
-
-    merge_Sort(arr,0,num-1);
-
-    cout << "sorted Array :";
-    for(int i=0; i<num ; i++)
-    {
-        cout << arr[i] << " ";
-    }
-
-    return 0;
+    mergesort(a,b,0,num-1);
+    for(int i=0; i<num; i++)
+    cout<<a[i]<<" ";
+    cout<<endl;
 }
