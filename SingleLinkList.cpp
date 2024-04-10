@@ -244,13 +244,43 @@ int main()
 	
 	int ch;
 	
-	while()
+	while(1)
 	{
+		cout <<	"\n****MENU****";
 		
+		cout << "\n1.CREATE\n2.INSERT\n3.DELETE\n4.SEARCH\n5.DISPLAY\n6.EXIT";
 		
+		cout << "\n\nEnter your Choice :";
+		cin >> ch;
+		
+		switch(ch)
+		{
+			case 1:
+			l.create();	
+			break;
+			
+			case 2:
+			l.insert();
+			break;
+			
+			case 3:
+			l.delet();					
+			break;
+			
+			case 4:
+			l.search();
+			break;
+			
+			case 5:
+			l.display()	;
+			break;
+			
+			case 6:
+			return 0;	
+			break;
+			
+		}
 	}
-	
-	
 	
 	return 0;
 }
